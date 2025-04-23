@@ -46,7 +46,7 @@ scopecrawl -f <file_path> -o json
 
 ### **License**
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT license](LICENSE).
 
 ---
 
@@ -54,7 +54,7 @@ This project is licensed under the MIT License.
 
 Author: Rajashekar Nayini
 
-Email: offsecbitsb@gmail.com
+Email: offsecbits@gmail.com
 
 GitHub: https://github.com/offsecbits
 
