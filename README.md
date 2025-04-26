@@ -46,7 +46,7 @@ scopecrawl -f <file_path> -o json
 
 ### **License**
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT license](LICENSE).
 
 ---
 
@@ -54,17 +54,17 @@ This project is licensed under the MIT License.
 
 Author: Rajashekar Nayini
 
-Email: offsecbitsb@gmail.com
+Email: offsecbits@gmail.com
 
 GitHub: https://github.com/offsecbits
 
-LinkeIn: https://www.linkedin.com/in/rajashekarreddy-nayini/
+LinkedIn: https://www.linkedin.com/in/rajashekarreddy-nayini/
 
 ---
 
 ## **Next Steps**
 * Add **active\recursive** scanning capabilities.
-* Add rate limiting to control **req/sec** and concurent threads.
+* Add rate limiting to control **req/sec** and **concurent threads**.
 * Add **filters** on end results to match end users requirments.
 ---
 
