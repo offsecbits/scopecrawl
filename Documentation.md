@@ -9,7 +9,7 @@
 |----------------|----------------------------------------------------------------------------|----------|
 | `-u`           | Single URL to validate.                                                    |   None   |
 | `-f`           | Path to the input file containing a list of URLs (FQDNs) or domains.       |   None   |
-| `-o`           | Output format (`txt` or `json`).                                           |   `txt`  |
+| `-o`           | Output format (`txt` or `json`).                                           |   None   |
 | `-v`           | Show version information.                                                  |   None   |
 
 
@@ -35,7 +35,7 @@ The **scopecrawl** project is organized as follows:
     
     - **`linkextractor/`**: Extracts all the internal and external links from the HTML of a web page.
     
-    - **`outputhandler/`**: This module handles the generation of output files in various formats like `txt` or `json`.
+    - **`outputhandler/`**: This module handles the generation of output files in formats `txt` or `json`.
     
     - **`stderr/`**: Contains functions for consistent error handling and reporting to standard error.
   

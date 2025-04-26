@@ -1,5 +1,5 @@
 # scopecrawl
-
+![ScopeCrawl ART](./media/ASCII_ART.png)
 **scopecrawl** is a powerful, easy-to-use CLI tool for **in-scope** web crawling, URL validation, and link extraction. Written in Go, **scopecrawl** helps you validate URLs, remove duplicates, and extract valuable links from web pages. This tool is ideal for security professionals, web developers, and anyone in need of efficient URL analysis and crawling.
 
 ## Features
