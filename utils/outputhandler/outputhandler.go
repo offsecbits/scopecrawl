@@ -42,9 +42,9 @@ func writeToFile(filename string, content []string, format string) error {
 // SaveLinks saves extracted links to file named after the base domain
 func SaveLinks(baseURL string, links []string, format string) error {
         // Handle empty format by defaulting to txt
-        if format != "json" {
-                format = "txt"
-        }
+//        if format != "json" {
+//                format = "txt"
+//        }
 
 
 	safeName := sanitizeFilename(baseURL)

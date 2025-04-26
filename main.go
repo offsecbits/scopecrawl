@@ -4,22 +4,24 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/offsecbits/scopecrawl/utils/aesthetics"
 	"github.com/offsecbits/scopecrawl/utils/dedupe"
 	"github.com/offsecbits/scopecrawl/utils/inputvalidator"
 	"github.com/offsecbits/scopecrawl/utils/linkextractor"
 	"github.com/offsecbits/scopecrawl/utils/outputhandler"
 	"github.com/offsecbits/scopecrawl/utils/stderr"
-
 )
 
-const version = "v1.0.0"
+const version = "v1.0.1"
 
 func main() {
+
+	aesthetics.PrintBanner()
 	// Flags
 	inputFile := flag.String("f", "", "Path to the input file containing FQDNs or URLs")
 	singleURL := flag.String("u", "", "Single URL to validate")
 	showVersion := flag.Bool("v", false, "Show version information and exit")
-	outputFormat := flag.String("o", "txt", "Output format: txt or json")
+	outputFormat := flag.String("o", "", "Output format: txt or json. Leave blank to skip saving output.")
 	flag.Usage = func() {
 		stderr.Usage(version)
 	}
@@ -30,7 +32,6 @@ func main() {
 		stderr.PrintVersion(version)
 		return
 	}
-
 
 	var goodURLs, badURLs []string
 	var err error
@@ -67,8 +68,19 @@ func main() {
 	// Deduplicate URLs
 	uniqueURLs := dedupe.RemoveDuplicates(goodURLs)
 
+	// Determine if output should be saved
+	writeOutput := false
+	format := "txt"
+
+	if *outputFormat != "" {
+		writeOutput = true
+		if *outputFormat == "json" {
+			format = "json"
+		}
+	}
+
 	// Output
-	fmt.Println("\nEnumerating valid target(s):")
+	aesthetics.PrintInfo("\nEnumerating valid target(s):")
 	for _, url := range uniqueURLs {
 		fmt.Println(" -", url)
 
@@ -89,16 +101,22 @@ func main() {
 		// Deduplicate extracted links
 		uniqueLinks := dedupe.RemoveDuplicates(links)
 
-		// Output extracted links
-		fmt.Println("\nExtracted links from", url)
-		for _, link := range uniqueLinks {
-			fmt.Println(" -", link)
+		// Output Logic
+
+		// Save links to file only if -o flag was used
+		if writeOutput {
+			err = outputhandler.SaveLinks(url, uniqueLinks, format)
+			if err != nil {
+				stderr.PrintOutputError(url, err)
+			}
+		} else {
+			// Print to terminal if -o flag is missing
+			fmt.Println("\nExtracted links from", url)
+			for _, link := range uniqueLinks {
+				fmt.Println(" -", link)
+			}
 		}
 		fmt.Printf("Total unique links extracted from %s: %d\n", url, len(uniqueLinks))
-        	// Save links to file
-        	err = outputhandler.SaveLinks(url, uniqueLinks, *outputFormat)
-        	if err != nil {
-            	stderr.PrintOutputError(url, err)
-        	}
+	
 	}
 }

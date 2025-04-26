@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+//        "github.com/offsecbits/scopecrawl/utils/aesthetics"
 )
 
 func Usage(version string) {
