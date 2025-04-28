@@ -6,7 +6,7 @@
 
 - **Single URL**: Quickly extract all in-scope domain links from html page.
 - **Batch URL**: Quickly extract list of in-scope domains links from respective html pages.
-- **Deduplication**: Automatically remove duplicate URLs for cleaner results.
+- **Active Crawling**: Crawls website recursively extracting valuble links, with depth and request rate limits.
 - **Output support**: Export results in plain text or JSON format into respective files.
 
 ---  
@@ -36,11 +36,13 @@ scopecrawl -u example.com
 ```bash
 scopecrawl -f <file_path>
 ```
-**3. Output folder with txt or json files**
+**3. Active  recursive scans with depth and ratelimit**
 ```bash
-scopecrawl -f <file_path> -o json
+scopecrawl -f <file_path> -d 2 -r 3 -t 2 -o txt
 ```
-### **Read [Documentation](./DOCUMENTATION.md) for detailed information.**
+
+
+### **Read [Documentation](./Documentation.md) for detailed information.**
 
 ---
 

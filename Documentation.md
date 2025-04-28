@@ -11,6 +11,10 @@
 | `-f`           | Path to the input file containing a list of URLs (FQDNs) or domains.       |   None   |
 | `-o`           | Output format (`txt` or `json`).                                           |   None   |
 | `-v`           | Show version information.                                                  |   None   |
+| `-d`           | Depth of recursive scanning.                                               |     0    |
+| `-r`           | Requests per second (rps) rate limit for active scanning.                  |     2    |
+| `-t`           | Number of concurrent threads for active scanning.                          |     2    |
+
 
 
 ---
@@ -19,24 +23,20 @@
 
 The **scopecrawl** project is organized as follows:
 
-- **`go.mod`**: This is the Go module file that contains dependencies and other metadata for the project.
+- **`go.mod`**: Go module file containing dependencies.
+- **`go.sum`**: Dependency integrity checksums.
+- **`main.go`**: CLI entry point orchestrating the entire tool's workflow.
+- **`utils/`**: Utility modules:
   
-- **`go.sum`**: This file contains checksums for the dependencies in your `go.mod` to ensure integrity and consistency.
-
-- **`main.go`**: The entry point for the **scopecrawl** CLI tool. It handles command-line input and orchestrates the functionality of all the utilities.
-
-- **`utils/`**: A folder containing all the utility modules. These are responsible for various tasks like input validation, URL normalization, deduplication, link extraction, output handling, and error management.
-
-    - **`inputvalidator/`**: This module handles reading and validating input URLs or domain names (from a file or direct input).
-    
-    - **`urlnormalize/`**: This module ensures that URLs are properly normalized (e.g., adding `https://`, ensuring valid syntax).
-    
-    - **`dedupe/`**: This module removes duplicate URLs from a list to ensure that only unique links are processed.
-    
-    - **`linkextractor/`**: Extracts all the internal and external links from the HTML of a web page.
-    
-    - **`outputhandler/`**: This module handles the generation of output files in formats `txt` or `json`.
-    
-    - **`stderr/`**: Contains functions for consistent error handling and reporting to standard error.
+    - **`inputvalidator/`**: Reads and validates input URLs (single or file).
+    - **`urlnormalize/`**: Normalizes URLs (e.g., adding schemes, correcting format).
+    - **`dedupe/`**: Removes duplicate URLs.
+    - **`linkextractor/`**: Extracts internal links from HTML.
+    - **`outputhandler/`**: Handles output file creation (`txt`, `json`).
+    - **`ratelimiter/`**: Manages concurrency and request-per-second limits.
+    - **`stderr/`**: Consistent error reporting to standard error output.
+    - **`aesthetics/`**: Handles colors, banner, and beautification of tool.
+    - **`activescanner/`**: Recursive active scanning implementation.
+    - **`filters/`**: Filters on non-html pages and keywords. Work in progress...
   
 ---

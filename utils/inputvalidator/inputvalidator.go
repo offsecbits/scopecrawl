@@ -4,9 +4,11 @@ import (
 	"bufio"
 	"net/url"
 	"fmt"
+	"flag"
 	"os"
 	"regexp"
 	"strings"
+        "github.com/offsecbits/scopecrawl/utils/aesthetics"
 	"github.com/offsecbits/scopecrawl/utils/urlnormalize"
 )
 
@@ -54,7 +56,7 @@ func ValidateSingleURL(raw string) (string, error) {
 // HandleBadURLs will prompt the user with bad URLs and ask if they want to continue.
 func HandleBadURLs(badURLs []string) bool {
 	if len(badURLs) > 0 {
-		fmt.Println("\nWarning: The following invalid URLs were skipped during processing:")
+		aesthetics.PrintWarning("\nWarning: The following invalid URLs were skipped during processing:")
 		for _, bad := range badURLs {
 			fmt.Println("  -", bad)
 		}
@@ -90,4 +92,23 @@ func isValidURL(raw string) bool {
 	}
 
 	return true
+}
+
+
+// ValidatePositiveInt checks if the given integer is positive (> 0).
+func ValidatePositiveInt(name string, value int) {
+    if value <= 0 {
+        fmt.Printf("Error: -%s must be a positive integer.\n\n", name)
+        flag.Usage()
+        os.Exit(1)
+    }
+}
+
+// ValidateNonNegativeInt checks if the given integer is zero or positive (>= 0).
+func ValidateNonNegativeInt(name string, value int) {
+    if value < 0 {
+        fmt.Printf("Error: -%s cannot be negative.\n\n", name)
+        flag.Usage()
+        os.Exit(1)
+    }
 }

@@ -3,26 +3,27 @@ package aesthetics
 import "fmt"
 
 const (
-	reset  = "\033[0m"
-	red    = "\033[31m"
-	green  = "\033[32m"
-	yellow = "\033[33m"
-	blue   = "\033[34m"
-	cyan = "\033[36m"
+	Reset  = "\033[0m"
+	Red    = "\033[31m"
+	Green  = "\033[32m"
+	Yellow = "\033[33m"
+	Blue   = "\033[34m"
+	Cyan   = "\033[36m"
+	Bold   = "\033[1m"
 )
 
 func PrintError(msg string) {
-	fmt.Println(red + "[ERROR] " + msg + reset)
+	fmt.Println(Red + "[ERROR] " + msg + Reset)
 }
 
 func PrintSuccess(msg string) {
-	fmt.Println(green + "[SUCCESS] " + msg + reset)
+	fmt.Println(Green + "[SUCCESS] " + msg + Reset)
 }
 
 func PrintWarning(msg string) {
-	fmt.Println(yellow + "[WARNING] " + msg + reset)
+	fmt.Println(Yellow + "" + msg + Reset)
 }
 
 func PrintInfo(msg string) {
-	fmt.Println(blue + "" + msg + reset)
+	fmt.Println(Blue + "" + msg + Reset)
 }

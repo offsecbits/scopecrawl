@@ -8,8 +8,8 @@ import (
 	"strings"
 )
 
-// writeToFile handles writing to either .txt or .json
-func writeToFile(filename string, content []string, format string) error {
+// writeToFileFunc handles writing to either .txt or .json
+func writeToFileFunc(filename string, content []string, format string) error {
 	// Create the "output" directory if it doesn't exist
 	if err := os.MkdirAll("output", os.ModePerm); err != nil {
 		return fmt.Errorf("failed to create output directory: %w", err)
@@ -39,25 +39,30 @@ func writeToFile(filename string, content []string, format string) error {
 	return nil
 }
 
-// SaveLinks saves extracted links to file named after the base domain
-func SaveLinks(baseURL string, links []string, format string) error {
-        // Handle empty format by defaulting to txt
-//        if format != "json" {
-//                format = "txt"
-//        }
+// SaveLinks saves extracted links to a file or prints them to console based on writeToFile flag
+func SaveLinks(baseURL string, links []string, format string, writeToFile bool) error {
+	if !writeToFile {
+		// Print links to console instead of writing to file
+		fmt.Println("\nExtracted links from", baseURL)
+		for _, link := range links {
+			fmt.Println(" -", link)
+		}
+		fmt.Printf("Total unique links extracted from %s: %d\n", baseURL, len(links))
+		return nil
+	}
 
-
-	safeName := sanitizeFilename(baseURL)
+	// Handle saving to file
+	safeName := SanitizeFilename(baseURL)
 	extension := ".txt"
 	if format == "json" {
 		extension = ".json"
 	}
 	filename := safeName + extension
-	return writeToFile(filename, links, format)
+	return writeToFileFunc(filename, links, format)
 }
 
 // sanitizeFilename ensures the filename is safe for writing
-func sanitizeFilename(url string) string {
+func SanitizeFilename(url string) string {
 	url = strings.TrimPrefix(url, "https://")
 	url = strings.TrimPrefix(url, "http://")
 	url = strings.ReplaceAll(url, "/", "_")
