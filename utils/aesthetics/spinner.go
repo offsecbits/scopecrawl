@@ -27,7 +27,7 @@ func StartSpinner() *Spinner {
 				for _, symbol := range spinSymbols {
 					// Print the spinner symbol and overwrite it
 					fmt.Printf("\r \r \r%s %s %s ", symbol, symbol, symbol)
-					time.Sleep(100 * time.Millisecond)
+					time.Sleep(50 * time.Millisecond)
 				}
 			}
 		}
