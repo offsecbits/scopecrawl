@@ -96,8 +96,10 @@ if *outputFormat != "" {
 }
 
 // Output and processing of URLs
-spinner := aesthetics.StartSpinner()
+
 aesthetics.PrintInfo("\nEnumerating valid target(s):")
+spinner := aesthetics.StartSpinner()
+
 for _, url := range uniqueURLs {
     fmt.Println("\n+", url) 
 
