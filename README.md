@@ -1,6 +1,22 @@
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Terms of Use](https://img.shields.io/badge/Terms-Ethical%20Use-blue)](./TERMS.md)
+
+
 # scopecrawl
 ![ScopeCrawl ART](./media/ASCII_ART.png)
 **scopecrawl** is a powerful, easy-to-use CLI tool for **in-scope** web crawling, URL validation, and link extraction. Written in Go, **scopecrawl** helps you validate URLs, remove duplicates, and extract valuable links from web pages. This tool is ideal for security professionals, web developers, and anyone in need of efficient URL analysis and crawling.
+
+## 📜 Terms of Use
+
+This tool is intended **for educational and authorized use only**. By using this project, you agree to follow the [Terms of Service](./TERMS.md).
+
+Please use responsibly:
+- Only scan systems and domains you own or have explicit permission to test.
+- Do not use this tool for malicious purposes or in violation of any law.
+
+The author is not responsible for any misuse or damage caused by this tool.
+
 
 ## Features
 
