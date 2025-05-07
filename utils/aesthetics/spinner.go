@@ -22,8 +22,7 @@ func StartSpinner() *Spinner {
 			case <-spinner.stop:
 				// Stop the spinner when the signal is received
 				fmt.Print("\rDone!        \n") // Clear the spinner
-				time.Sleep(100 * time.Millisecond)
-
+//				time.Sleep(100 * time.Millisecond)
 				return
 			default:
 				for _, symbol := range spinSymbols {

@@ -39,17 +39,8 @@ func writeToFileFunc(filename string, content []string, format string) error {
 	return nil
 }
 
-// SaveLinks saves extracted links to a file or prints them to console based on writeToFile flag
-func SaveLinks(baseURL string, links []string, format string, writeToFile bool) error {
-	if !writeToFile {
-		// Print links to console instead of writing to file
-		fmt.Println("\nExtracted links from", baseURL)
-		for _, link := range links {
-			fmt.Println(" -", link)
-		}
-		fmt.Printf("Total unique links extracted from %s: %d\n", baseURL, len(links))
-		return nil
-	}
+// SaveLinks always saves links to a file in the specified format
+func SaveLinks(baseURL string, links []string, format string) error {
 
 	// Handle saving to file
 	safeName := SanitizeFilename(baseURL)

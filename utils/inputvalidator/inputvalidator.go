@@ -12,6 +12,7 @@ import (
 	"github.com/offsecbits/scopecrawl/utils/urlnormalize"
 )
 
+var YesToAll bool
 // ValidateInputFile validates and normalizes the URLs from the given file.
 func ValidateInputFile(filePath string) ([]string, []string, error) {
 	file, err := os.Open(filePath)
@@ -61,9 +62,16 @@ func HandleBadURLs(badURLs []string) bool {
 			fmt.Println("  -", bad)
 		}
 
+		if YesToAll {
+		        return true
+		}
+
 		fmt.Print("\nDo you want to continue with the valid URLs? (y/n): ")
 		var answer string
-		fmt.Scanln(&answer)
+		if _, err := fmt.Scanln(&answer); err != nil {
+			fmt.Println("Error reading input:", err)
+			return false
+		}
 
 		return strings.ToLower(answer) == "y"
 	}
@@ -87,11 +95,8 @@ func isValidURL(raw string) bool {
 	host := parsed.Hostname()
 	re := regexp.MustCompile(`^([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$`)
 	matches := re.FindStringSubmatch(host)
-	if len(matches) < 1 {
-		return false
-	}
+	return len(matches) >= 1
 
-	return true
 }
 
 

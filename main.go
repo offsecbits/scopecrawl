@@ -16,7 +16,7 @@ import (
 
 )
 
-const version = "v1.1.1"
+const version = "v1.1.2"
 
 
 func main() {
@@ -29,6 +29,7 @@ func main() {
     depth := flag.Int("d", 0, "Depth for recursive crawling (0 for passive scanning)")
     rate := flag.Int("r", 2, "Requests per second (rate limiting)")
     threads := flag.Int("t", 2, "Number of concurrent threads for crawling")
+    yesFlag := flag.Bool("y", false, "Automatically answer 'yes' to all prompts")
 
     flag.Usage = func() {
         stderr.Usage(version)
@@ -39,6 +40,7 @@ func main() {
     inputvalidator.ValidatePositiveInt("t", *threads)
     inputvalidator.ValidatePositiveInt("r", *rate)
     inputvalidator.ValidateNonNegativeInt("d", *depth)
+    inputvalidator.YesToAll = *yesFlag
 
     // ✅ Safe to continue
 //    fmt.Println(aesthetics.Blue + "Starting with | Threads:",*threads, "| Rate:",*rate, "| Depth:",*depth, "|" + aesthetics.Reset)
@@ -85,15 +87,12 @@ func main() {
     limiter := ratelimiter.NewLimiter(*threads, *rate)
     limiter.Start()
 
-// Determine if output should be saved
-writeOutput := false
-format := "txt"
-if *outputFormat != "" {
-    writeOutput = true
-    if *outputFormat == "json" {
-        format = "json"
-    }
-}
+// Always save the output
+
+	format := "txt"      // default format
+	if *outputFormat == "json" {
+  	  format = "json"
+	}
 
 // Output and processing of URLs
 
@@ -101,7 +100,9 @@ aesthetics.PrintInfo("\nEnumerating valid target(s):")
 spinner := aesthetics.StartSpinner()
 
 for _, url := range uniqueURLs {
-    fmt.Println("\n+", url) 
+
+//    fmt.Println("\n+", url) 
+
 
     // Unified crawl (handles both active and passive internally)
     links := activescanner.Crawl(url, *depth, limiter)
@@ -110,20 +111,19 @@ for _, url := range uniqueURLs {
     uniqueLinks := dedupe.RemoveDuplicates(links)
 
     // Unified output
-    err = outputhandler.SaveLinks(url, uniqueLinks, format, writeOutput)
+    err = outputhandler.SaveLinks(url, uniqueLinks, format)
     if err != nil {
         stderr.PrintOutputError(url, err)
     }
 
-    if writeOutput {
         // Notify user where the output is saved
-        fmt.Printf(aesthetics.Green + "\nEnumeration completed for %s and Output is saved to " + aesthetics.Bold + "output/%s.%s\n" + aesthetics.Reset, url, outputhandler.SanitizeFilename(url), format + aesthetics.Reset)
-    }
+    fmt.Printf(aesthetics.Green + "\nEnumeration completed for %s and Output is saved to " + aesthetics.Bold + "output/%s.%s\n" + aesthetics.Reset, url, outputhandler.SanitizeFilename(url), format + aesthetics.Reset)
+    
 }
 
 spinner.Stop()
+
 // Stop the limiter after crawling is done
 limiter.Stop()
-
 
 }
